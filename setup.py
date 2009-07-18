@@ -16,5 +16,4 @@ setup(name = 'suvat',
       ext_modules = [Extension('suvatext', sources = ['suvatlib/suvatext.c'])],
       requires = ['pygtk (>= 2.0)', 'gtk'],
       license = 'GPL-3',
-      data_files = [('/usr/share/man/man1', 'suvat.1.gz')],
       url = 'https://launchpad.net/suvat')
