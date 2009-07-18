@@ -1,0 +1,10 @@
+README
+COPYING
+AUTHORS
+ChangeLog
+setup.py
+suvat
+suvatlib/__init__.py
+suvatlib/suvatcalc.py
+suvatlib/suvatext.c
+suvatlib/suvatwin.py

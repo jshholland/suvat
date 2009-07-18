@@ -1,0 +1,9 @@
+== suvat ==
+suvat is a GTK based utility to calculate various details about the motion of
+an object (namely its displacement, initial velocity, final velocity,
+acceleration and the time taken) given other details.
+The GUI is written in Python using PyGTK but the main calculation is written
+in C for speed.
+It is licensed under the GPL version 3 and is copyright (C) 2009 Josh Holland.
+For further information, see http://launchpad.net/suvat or email
+jrh@joshh.co.uk.

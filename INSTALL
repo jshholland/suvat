@@ -1,0 +1,9 @@
+suvat uses a setup.py script. To install,
+# python setup.py install
+To build without installing,
+$ python setup.py build
+
+Options to the script can be found by
+$ python setup.py --help
+or
+$ python setup.py --help-commands
