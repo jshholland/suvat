@@ -1,0 +1,11 @@
+# ignore the build folder "build/"
+build/
+
+# ignore object files of various types
+*.[oa]
+*.py[co]
+*.so
+
+# ignore backups and swap files
+*~
+*.sw[nop]
