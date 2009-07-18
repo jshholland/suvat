@@ -1,0 +1,22 @@
+Source: suvat
+Section: science
+Priority: extra
+Maintainer: Ubuntu MOTU Developers <ubuntu-motu@lists.ubuntu.com>
+XSBC-Original-Maintainer: Josh Holland <jrh@joshh.co.uk>
+XS-Python-Version: all
+Build-Depends: cdbs, debhelper (>= 7), python-dev, python-central
+Standards-Version: 3.8.0
+Homepage: https://launchpad.net/suvat
+
+Package: suvat
+Architecture: any
+XB-Python-Version: ${python:Versions}
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}, python-gtk2
+Description: small PyGTK application to use the equations of motion
+ suvat is a small Python/C application that uses the equations
+ of motion under constant acceleration to find out two from displacement,
+ initial velocity, final velocity, acceleration and time taken, given
+ the other three.
+ .
+ While the UI is written in Python, the calculation is done in C for
+ speed.

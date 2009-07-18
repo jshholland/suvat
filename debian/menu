@@ -1,0 +1,2 @@
+?package(suvat):needs="X11" section="Applications/Science/Physics"\
+  title="Suvat" command="/usr/bin/suvat"
