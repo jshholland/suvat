@@ -95,7 +95,7 @@ class SuvatWin:
 
     def __init__(self):
         self.window = gtk.Window()
-        self.window.set_title(_("Suvat v0.1"))
+        self.window.set_title(_("Suvat v0.1.1"))
         self.window.connect("destroy", lambda w: gtk.main_quit())
 
         self.table = gtk.Table(2, 6, True)
