@@ -1,0 +1,9 @@
+== Short term ==
+* Keep on optimising for speed and solving of equations (ongoing)
+* Provide documentation (targeted for v0.2)
+
+== Long term ==
+* Introduce features such as:
+    1. Solving Newton's Second Law problems (F = ma)
+    2. Provide a pictorial representation of the motion
+    3. Solving free fall problems
