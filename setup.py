@@ -2,7 +2,7 @@
 from distutils.core import setup, Extension
 
 setup(name = 'suvat',
-      version = '0.1.1',
+      version = '0.2',
       description = 'A simple GUI to solve equations of motion under '
               'constant acceleration',
       long_description = 'suvat uses the equations of motion with '
