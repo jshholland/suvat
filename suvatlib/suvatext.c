@@ -35,7 +35,7 @@
 /* used to tell check_args which arguments are known.
  * (otherwise risk of uninitialised data.
  */
-struct {
+static struct {
     unsigned s_known : 1;
     unsigned u_known : 1;
     unsigned v_known : 1;
