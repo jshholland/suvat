@@ -5,17 +5,24 @@
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.7	//
 SuvatMethods	suvatlib/suvatext.c	/^static PyMethodDef SuvatMethods[] = {$/;"	v	file:
+SuvatWin	build/lib.linux-i686-2.6/suvatlib/suvatwin.py	/^class SuvatWin:$/;"	c
 SuvatWin	suvatlib/suvatwin.py	/^class SuvatWin:$/;"	c
+__init__	build/lib.linux-i686-2.6/suvatlib/suvatwin.py	/^    def __init__(self):$/;"	m	class:SuvatWin
 __init__	suvatlib/suvatwin.py	/^    def __init__(self):$/;"	m	class:SuvatWin
 a_known	suvatlib/suvatext.c	/^    unsigned a_known : 1;$/;"	m	struct:__anon1	file:
+calculate	build/lib.linux-i686-2.6/suvatlib/suvatcalc.py	/^def calculate(val_list):$/;"	f
 calculate	suvatlib/suvatcalc.py	/^def calculate(val_list):$/;"	f
+cb_calculate	build/lib.linux-i686-2.6/suvatlib/suvatwin.py	/^    def cb_calculate(self, widget, data=None):$/;"	m	class:SuvatWin
 cb_calculate	suvatlib/suvatwin.py	/^    def cb_calculate(self, widget, data=None):$/;"	m	class:SuvatWin
+cb_reset	build/lib.linux-i686-2.6/suvatlib/suvatwin.py	/^    def cb_reset(self, widget, data=None):$/;"	m	class:SuvatWin
 cb_reset	suvatlib/suvatwin.py	/^    def cb_reset(self, widget, data=None):$/;"	m	class:SuvatWin
 check_args	suvatlib/suvatext.c	/^check_args(double displ, double initv, double endv, double accel,$/;"	f	file:
 initsuvatext	suvatlib/suvatext.c	/^initsuvatext(void) {$/;"	f
 known	suvatlib/suvatext.c	/^} known;$/;"	v	typeref:struct:__anon1	file:
+main	build/lib.linux-i686-2.6/suvatlib/suvatwin.py	/^def main():$/;"	f
 main	suvatlib/suvatext.c	/^main(int argc, char *argv[]) {$/;"	f
 main	suvatlib/suvatwin.py	/^def main():$/;"	f
+make_dialog	build/lib.linux-i686-2.6/suvatlib/suvatwin.py	/^def make_dialog(title, message):$/;"	f
 make_dialog	suvatlib/suvatwin.py	/^def make_dialog(title, message):$/;"	f
 s_known	suvatlib/suvatext.c	/^    unsigned s_known : 1;$/;"	m	struct:__anon1	file:
 suvatext_at	suvatlib/suvatext.c	/^suvatext_at(PyObject *self, PyObject *args) {$/;"	f	file:
