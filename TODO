@@ -3,7 +3,8 @@
 * Provide documentation (targeted for v0.2)
 
 == Long term ==
-* Introduce features such as:
-    1. Solving Newton's Second Law problems (F = ma)
-    2. Provide a pictorial representation of the motion
-    3. Solving free fall problems
+* Solving Newton's Second Law problems (F = ma)
+* Provide a pictorial representation of the motion
+* Solving free fall problems
+* Modelling 2- or 3-dimensional movement
+* Model impact and restitution
