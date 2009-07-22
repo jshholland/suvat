@@ -15,8 +15,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-
-
 /* This extension module to suvat provides the low-level implementations
  * of the calculations needed by suvat.
  *
@@ -43,34 +41,70 @@ static struct {
     unsigned t_known : 1;
 } known;
 
+/* check the args to ensure that there are no contradictions
+ * uses the known struct to find out which parameters are known
+ * return 0 on valid args, -1 on invalid
+ */
 static int
 check_args(double displ, double initv, double endv, double accel,
                 double time) {
-    /* so far, not a lot */
+    int invalid = 0;        /* flag invalid args */
+
     /* check that things are not changing in zero time */
     if (known.t_known && time == 0) {
         /* check we are not covering distance */
-        if (known.s_known && displ != 0)
-            goto inval;
+        if (known.s_known && displ != 0) {
+            invalid = -1;
+            goto done;
+        }
         /* check velocity has not changed */
-        else if (initv != endv) /* we know u and v */
-            goto inval;
+        if (known.u_known && known.v_known && initv != endv) {
+            invalid = -1;
+            goto done;
+        }
     }
+
     /* if we are not covering distance, do a basic check for speed */
     if (known.s_known && displ == 0) {
-        if (known.u_known && known.v_known && initv != 0 && endv != 0)
-            goto inval;
-        if (known.u_known && known.v_known && initv == -endv) /* we assume constant a */
-            goto inval;
+        if (known.u_known && initv) {
+            invalid = -1;
+            goto done;
+        }
+        if (known.v_known && endv) {
+            invalid = -1;
+            goto done;
+        }
+        if (known.u_known && known.v_known && initv == -endv) { /* we assume constant a */
+            invalid = -1;
+            goto done;
+        }
     }
-    known.s_known = known.u_known = known.v_known = known.a_known = known.t_known = 0;
-    return 0; /* nothing wrong as far as we know, tell caller */
 
-inval:  PyErr_SetString(PyExc_ValueError, "Invalid input data");
+    /* check that acceleration is the right way round */
+    if (known.u_known && known.v_known && initv * endv < 0) /* they have a different sign */
+        if (known.a_known && (endv - initv) * accel < 0) {
+            invalid = -1;
+            goto done; /* both v - u and a must have the same sign */
+        }
+
+    /* check that speed is not changing if acceleration == 0 */
+    if (known.u_known && known.v_known && known.a_known)
+        if (accel == 0 && initv != endv) {
+            invalid = -1;
+            goto done;
+        }
+
+done:   if (invalid) PyErr_SetString(PyExc_ValueError, "Invalid input data");
         known.s_known = known.u_known = known.v_known = known.a_known = known.t_known = 0;
-        return -1;
+        return invalid;
 }
 
+/* the functions below do the actual calculation.
+ * their name gives the two variables they calculate
+ * they return (Python) 2-tuples containing the two variables they
+ * have calculated and take (Python) 3-tuples with the other three
+ * as arguments
+ */
 static PyObject *
 suvatext_at(PyObject *self, PyObject *args) {
     double displ=0.0, initv=0.0, endv=0.0, accel=0.0, time=0.0;
@@ -90,16 +124,11 @@ suvatext_at(PyObject *self, PyObject *args) {
              * a = (v - u) / t
              */
             accel = (endv - initv) / time;
-        } else if (displ != 0) {
-            /* v^2 = u^2 + 2as
-             * a = (v^2 - u^2) / 2s
-             */
-            accel = (endv * endv - initv * initv) / (2 * displ);
         } else {
             PyErr_SetString(PyExc_ValueError, "Cannot solve given that data");
             return NULL;
         }
-    } else if (displ != 0) {
+    } else {
         /* v^2 = u^2 + 2as
          * a = (v^2 - u^2) / 2s
          */
@@ -128,6 +157,12 @@ suvatext_vt(PyObject *self, PyObject *args) {
 
     /* v^2 = u^2 + 2as */
     endv = sqrt(fabs(initv * initv + 2.0 * accel * displ));
+
+    /* correct sign of v */
+    if (accel < 0 && endv >= initv)
+        endv = -endv;
+    if (accel > 0 && endv <= initv)
+        endv = -endv;
 
     if (accel != 0) {
         /* v = u + at
