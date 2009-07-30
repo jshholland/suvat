@@ -4,7 +4,6 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.7	//
-DEB_PYTHON_SYSTEM	debian/rules	/^DEB_PYTHON_SYSTEM=pycentral$/;"	m
 SAT	suvatlib/suvatext.c	/^enum suvat_known {SUV, SUA, SUT, SVA, SVT, SAT, UVA, UVT, UAT, VAT};$/;"	e	enum:suvat_known	file:
 SUA	suvatlib/suvatext.c	/^enum suvat_known {SUV, SUA, SUT, SVA, SVT, SAT, UVA, UVT, UAT, VAT};$/;"	e	enum:suvat_known	file:
 SUT	suvatlib/suvatext.c	/^enum suvat_known {SUV, SUA, SUT, SVA, SVT, SAT, UVA, UVT, UAT, VAT};$/;"	e	enum:suvat_known	file:
