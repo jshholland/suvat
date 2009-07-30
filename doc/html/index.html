@@ -1,44 +1,21 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-<head>
-    <title>suvat v0.2</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    <meta http-equiv="Content-Language" content="en-gb" />
-    <link rel="stylesheet" href="style.css" />
-</head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<body>
-    <h1>Suvat, the motion simulator</h1>
-    <p>
-    This is the documentation for Suvat version 0.2. Suvat is a small
-    application that uses the laws of motion under constant acceleration to
-    calculate details of the motion of an object.
-    </p>
-    <p>
-    But what does this actually mean? What you see when you run Suvat is a
-    window with 5 labelled entry boxes and two buttons. After a small amount of
-    experimentation, you will find that you are expected to enter three numbers
-    and press the "Calculate" button. If the numbers make sense in a basic
-    physical sense, Suvat will calculate the remaining details of motion
-    and fill in the remaining entry boxes.
-    </p>
-    <p>
-    An example might help make more sense. Say you enter the numbers as
-    follows:
-    <ul>
-	<li>10 in "Displacement"</li>
-	<li>3 in "Original velocity"</li>
-	<li>7 in "Time"</li>
-    </ul>
-    Pressing calculate will then fill in the remaining boxes:
-    <ul>
-	<li>-0.142857142857 in "Final velocity"</li>
-	<li>-0.448979591837 in "Acceleration"</li>
-    </ul>
-    These are the correct details for an object to travel 10 metres
-    in 7 seconds starting with a velocity of 3 metres per second.
-    </p>
-</body>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+	<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+	<title>Home - suvat documentation</title>
+	<link rel="stylesheet" type="text/css" href="style.css" />
+    </head>
 
+    <body>
+	<h1>Home</h1>
+
+        <p>Welcome to the Suvat wiki!</p>
+	<p>The current version is 0.1.1, and the development version is 0.2.</p>
+	<p>To run Suvat, you need a recent version of Python (tested with 2.6), PyGTK 2 and, if you are compiling from source, the Python development headers.</p>
+	<p>How do you get Suvat? If you run Ubuntu, you can get it from a <acronym title="Personal Package Archive">PPA</acronym> on <a href="https://launchpad.net/~suvat-dev/+archive/ppa">Launchpad</a>. If you run another variety of Linux (or probably most Unices) you can build from source either from the stable package <a href="http://joshh.co.uk/stuff/suvat.tar.gz">here</a> or use the download link from the github front page if you are more adventurous.</p>
+	<p>If you can use the PPA, it&#8217;s as easy as <code>sudo aptitude install suvat</code>. If you have a source tarball, you&#8217;re going to do some compiling (:D) so make sure you have a compiler installed. All you need to do is run (with root privileges) <code>python setup.py install</code>. This will compile and install all the required files.</p>
+	<p>Once Suvat is installed, to run it, type the command <code>suvat</code>. For more details, see <a href="getting-started.html">Getting started</a>.</p>
+    </body>
 </html>
