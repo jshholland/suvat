@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 from distutils.core import setup, Extension
-from distutils.command.build import build as _build
-import os
 
 setup(name = 'suvat',
       version = '0.1.1',
