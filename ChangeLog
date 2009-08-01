@@ -1,9 +1,10 @@
 Changes in 0.2
     * Introduced more documentation - improved detail in README and INSTALL
-    files, added various forms of documentation in doc/.
+    files, added HTML documentation in doc/.
     * Input screening in suvatext.c improved
     * Desktop file included (thanks to Fabian Affolter
 	<fab@fedoraproject.org>)
+    * Icon added
 
 
 Changes in 0.1.1

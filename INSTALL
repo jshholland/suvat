@@ -9,5 +9,6 @@ or
 $ python setup.py --help-commands
 
 To install, you should need only what you would normally need to build a C
-program, the development headers for Python and the Python interpreter itself.
-Also, you will need the python-gtk2 (or its equivalent) package installed.
+program using the GNU gettext i18n suite, the development headers for Python
+and the Python interpreter itself.  Also, you will need the python-gtk2 (or its
+equivalent) package installed.
