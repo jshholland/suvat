@@ -1,15 +1,15 @@
 #!/usr/bin/env python
 from distutils.core import setup, Extension
-from distutils.command.build import build as _build
+from distutils.command.install import install as _install
 import os
 
-class build(_build):
+class install(_install):
     def run(self):
-        _build.run(self)
+        _install.run(self)
         os.system("desktop-file-install data/suvat.desktop")
 
 
-setup(cmdclass = {'build': build},
+setup(cmdclass = {'install': install},
       name = 'suvat',
       version = '0.2',
       description = 'A simple GUI to solve equations of motion under '
