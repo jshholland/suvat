@@ -71,14 +71,14 @@ class SuvatWin:
                     val_list.append(i)
         except ValueError, e:
             make_dialog(_("Invalid input!"),
-                    _(str(e)))
+                    str(e))
             return
 
         try:
             displ, initv, endv, accel, time = suvatcalc.calculate(val_list)
         except ValueError, e:
             make_dialog(_("Cannot solve!"),
-                    _(str(e)))
+                    str(e))
             return
 
         self.s_entry.set_text(str(displ))

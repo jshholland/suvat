@@ -30,6 +30,9 @@
 #include <Python.h>
 #include <math.h>
 
+#include <libintl.h>
+#define _(String) gettext (String)
+
 /* used to tell check_args which arguments are known.
  * (otherwise risk of uninitialised data.
  */
@@ -94,7 +97,7 @@ check_args(double displ, double initv, double endv, double accel,
             goto done;
         }
 
-done:   if (invalid) PyErr_SetString(PyExc_ValueError, "Invalid input data");
+done:   if (invalid) PyErr_SetString(PyExc_ValueError, _("Invalid input data"));
         known.s_known = known.u_known = known.v_known = known.a_known = known.t_known = 0;
         return invalid;
 }
@@ -125,7 +128,7 @@ suvatext_at(PyObject *self, PyObject *args) {
              */
             accel = (endv - initv) / time;
         } else {
-            PyErr_SetString(PyExc_ValueError, "Cannot solve given that data");
+            PyErr_SetString(PyExc_ValueError, _("Cannot solve given that data"));
             return NULL;
         }
     } else {
@@ -140,7 +143,7 @@ suvatext_at(PyObject *self, PyObject *args) {
              */
             time = (displ - initv) / accel;
         } else {
-            PyErr_SetString(PyExc_ValueError, "Cannot solve given that data");
+            PyErr_SetString(PyExc_ValueError, _("Cannot solve given that data"));
             return NULL;
         }
     }
@@ -175,7 +178,7 @@ suvatext_vt(PyObject *self, PyObject *args) {
          */
         time = (2 * displ) / (initv + endv);
     } else {
-        PyErr_SetString(PyExc_ValueError, "Cannot solve given that data");
+        PyErr_SetString(PyExc_ValueError, _("Cannot solve given that data"));
         return NULL;
     }
 
@@ -201,7 +204,7 @@ suvatext_va(PyObject *self, PyObject *args) {
          */
         accel = (endv - initv) / time;
     } else {
-        PyErr_SetString(PyExc_ValueError, "Cannot solve given that data");
+        PyErr_SetString(PyExc_ValueError, _("Cannot solve given that data"));
         return NULL;
     }
 
@@ -232,7 +235,7 @@ suvatext_ut(PyObject *self, PyObject *args) {
          */
         time = (2 * displ) / (initv + endv);
     } else {
-        PyErr_SetString(PyExc_ValueError, "Cannot solve given that data");
+        PyErr_SetString(PyExc_ValueError, _("Cannot solve given that data"));
         return NULL;
     }
 
@@ -258,7 +261,7 @@ suvatext_ua(PyObject *self, PyObject *args) {
          */
         accel = (endv - initv) / time;
     } else {
-        PyErr_SetString(PyExc_ValueError, "Cannot solve given that data");
+        PyErr_SetString(PyExc_ValueError, _("Cannot solve given that data"));
         return NULL;
     }
 
@@ -282,7 +285,7 @@ suvatext_uv(PyObject *self, PyObject *args) {
         /* v = u + at */
         endv = initv + accel * time;
     } else {
-        PyErr_SetString(PyExc_ValueError, "Cannot solve given that data");
+        PyErr_SetString(PyExc_ValueError, _("Cannot solve given that data"));
         return NULL;
     }
 
@@ -315,7 +318,7 @@ suvatext_st(PyObject *self, PyObject *args) {
             time = (endv - initv) / accel;
         }
     } else {
-        PyErr_SetString(PyExc_ValueError, "Cannot solve given that data");
+        PyErr_SetString(PyExc_ValueError, _("Cannot solve given that data"));
         return NULL;
     }
 
@@ -339,7 +342,7 @@ suvatext_sa(PyObject *self, PyObject *args) {
          */
         accel = (endv - initv) / time;
     } else { /* if t = 0, s = 0 so no way we can find a */
-        PyErr_SetString(PyExc_ValueError, "Cannot solve given that data");
+        PyErr_SetString(PyExc_ValueError, _("Cannot solve given that data"));
         return NULL;
     }
 
