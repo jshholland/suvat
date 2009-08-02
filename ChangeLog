@@ -1,3 +1,17 @@
-2009-02-14 Josh Holland <jrh@joshh.co.uk>
+Changes in 0.2
+    * Introduced more documentation - improved detail in README and INSTALL
+    files, added HTML documentation in doc/.
+    * Input screening in suvatext.c improved
+    * Desktop file included (thanks to Fabian Affolter
+	<fab@fedoraproject.org>)
+    * Icon added
+    * setup.py script changed to make it prefix-agnostic
 
-	* Initial release
+
+Changes in 0.1.1
+    * To be honest, 0.1.1 was just a version bump to make it easier to get
+    changed packaging into revu.ubuntuwire.com
+
+
+Changes in 0.1
+    * Initial release

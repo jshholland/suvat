@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 from distutils.core import setup, Extension
 
+
 setup(name = 'suvat',
-      version = '0.1.1',
+      version = '0.2',
       description = 'A simple GUI to solve equations of motion under '
               'constant acceleration',
       long_description = 'suvat uses the equations of motion with '
@@ -16,5 +17,6 @@ setup(name = 'suvat',
       ext_modules = [Extension('suvatext', sources = ['suvatlib/suvatext.c'])],
       requires = ['pygtk (>= 2.0)', 'gtk'],
       license = 'GPL-3',
-      data_files = [('/usr/share/man/man1', ['doc/suvat.1.gz'])],
+      data_files = [('share/man/man1', ['doc/suvat.1.gz']),
+                    ('share/applications', ['data/suvat.desktop'])],
       url = 'https://launchpad.net/suvat')
