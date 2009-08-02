@@ -15,8 +15,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-
-
 /* This extension module to suvat provides the low-level implementations
  * of the calculations needed by suvat.
  *
@@ -32,48 +30,90 @@
 #include <Python.h>
 #include <math.h>
 
+#include <libintl.h>
+#define _(String) gettext (String)
+
 /* used to tell check_args which arguments are known.
  * (otherwise risk of uninitialised data.
  */
-enum suvat_known {SUV, SUA, SUT, SVA, SVT, SAT, UVA, UVT, UAT, VAT};
+static struct {
+    unsigned s_known : 1;
+    unsigned u_known : 1;
+    unsigned v_known : 1;
+    unsigned a_known : 1;
+    unsigned t_known : 1;
+} known;
 
+/* check the args to ensure that there are no contradictions
+ * uses the known struct to find out which parameters are known
+ * return 0 on valid args, -1 on invalid
+ */
 static int
-check_args(int known, double displ, double initv, double endv, double accel,
+check_args(double displ, double initv, double endv, double accel,
                 double time) {
-    /* so far, not a lot */
-    /* check that things are not changing in zero time */
-    if (known == SUT || known == SVT || known == SAT || known == UVT ||
-            known == VAT) {
-        if (time == 0) {
-            /* check we are not covering distance */
-            if (known != UVT && displ != 0) /* we must know s */
-                goto inval;
-            /* check velocity has not changed */
-            else if (initv != endv) /* we know u and v */
-                goto inval;
-        }
-    }
-    /* if we are not covering distance, do a basic check for speed */
-    if (known == SUV || known == SUA || known == SUT || known == SVA ||
-            known == SVT || known == SAT) {
-        if (displ == 0) {
-            if (known == SUV && initv != 0 && endv != 0)
-                goto inval;
-            if (known == SUV && initv == -endv) /* we assume constant a */
-                goto inval;
-        }
-    }
-    return 0; /* nothing wrong as far as we know, tell caller */
+    int invalid = 0;        /* flag invalid args */
 
-inval:  PyErr_SetString(PyExc_ValueError, "Invalid input data");
-        return -1;
+    /* check that things are not changing in zero time */
+    if (known.t_known && time == 0) {
+        /* check we are not covering distance */
+        if (known.s_known && displ != 0) {
+            invalid = -1;
+            goto done;
+        }
+        /* check velocity has not changed */
+        if (known.u_known && known.v_known && initv != endv) {
+            invalid = -1;
+            goto done;
+        }
+    }
+
+    /* if we are not covering distance, do a basic check for speed */
+    if (known.s_known && displ == 0) {
+        if (known.u_known && initv) {
+            invalid = -1;
+            goto done;
+        }
+        if (known.v_known && endv) {
+            invalid = -1;
+            goto done;
+        }
+        if (known.u_known && known.v_known && initv == -endv) { /* we assume constant a */
+            invalid = -1;
+            goto done;
+        }
+    }
+
+    /* check that acceleration is the right way round */
+    if (known.u_known && known.v_known && initv * endv < 0) /* they have a different sign */
+        if (known.a_known && (endv - initv) * accel < 0) {
+            invalid = -1;
+            goto done; /* both v - u and a must have the same sign */
+        }
+
+    /* check that speed is not changing if acceleration == 0 */
+    if (known.u_known && known.v_known && known.a_known)
+        if (accel == 0 && initv != endv) {
+            invalid = -1;
+            goto done;
+        }
+
+done:   if (invalid) PyErr_SetString(PyExc_ValueError, _("Invalid input data"));
+        known.s_known = known.u_known = known.v_known = known.a_known = known.t_known = 0;
+        return invalid;
 }
 
+/* the functions below do the actual calculation.
+ * their name gives the two variables they calculate
+ * they return (Python) 2-tuples containing the two variables they
+ * have calculated and take (Python) 3-tuples with the other three
+ * as arguments
+ */
 static PyObject *
 suvatext_at(PyObject *self, PyObject *args) {
     double displ=0.0, initv=0.0, endv=0.0, accel=0.0, time=0.0;
+    known.s_known = known.u_known = known.v_known = 1;
     if (!PyArg_ParseTuple(args, "ddd", &displ, &initv, &endv)
-            || check_args(SUV, displ, initv, endv, accel, time))
+            || check_args(displ, initv, endv, accel, time))
         return NULL;
 
     if (initv + endv != 0) {
@@ -87,16 +127,11 @@ suvatext_at(PyObject *self, PyObject *args) {
              * a = (v - u) / t
              */
             accel = (endv - initv) / time;
-        } else if (displ != 0) {
-            /* v^2 = u^2 + 2as
-             * a = (v^2 - u^2) / 2s
-             */
-            accel = (endv * endv - initv * initv) / (2 * displ);
         } else {
-            PyErr_SetString(PyExc_ValueError, "Cannot solve given that data");
+            PyErr_SetString(PyExc_ValueError, _("Cannot solve given that data"));
             return NULL;
         }
-    } else if (displ != 0) {
+    } else {
         /* v^2 = u^2 + 2as
          * a = (v^2 - u^2) / 2s
          */
@@ -108,7 +143,7 @@ suvatext_at(PyObject *self, PyObject *args) {
              */
             time = (displ - initv) / accel;
         } else {
-            PyErr_SetString(PyExc_ValueError, "Cannot solve given that data");
+            PyErr_SetString(PyExc_ValueError, _("Cannot solve given that data"));
             return NULL;
         }
     }
@@ -118,12 +153,19 @@ suvatext_at(PyObject *self, PyObject *args) {
 static PyObject *
 suvatext_vt(PyObject *self, PyObject *args) {
     double displ=0.0, initv=0.0, endv=0.0, accel=0.0, time=0.0;
+    known.s_known = known.u_known = known.a_known = 1;
     if (!PyArg_ParseTuple(args, "ddd", &displ, &initv, &accel)
-            || check_args(SUA, displ, initv, endv, accel, time))
+            || check_args(displ, initv, endv, accel, time))
         return NULL;
 
     /* v^2 = u^2 + 2as */
     endv = sqrt(fabs(initv * initv + 2.0 * accel * displ));
+
+    /* correct sign of v */
+    if (accel < 0 && endv >= initv)
+        endv = -endv;
+    if (accel > 0 && endv <= initv)
+        endv = -endv;
 
     if (accel != 0) {
         /* v = u + at
@@ -136,7 +178,7 @@ suvatext_vt(PyObject *self, PyObject *args) {
          */
         time = (2 * displ) / (initv + endv);
     } else {
-        PyErr_SetString(PyExc_ValueError, "Cannot solve given that data");
+        PyErr_SetString(PyExc_ValueError, _("Cannot solve given that data"));
         return NULL;
     }
 
@@ -146,8 +188,9 @@ suvatext_vt(PyObject *self, PyObject *args) {
 static PyObject *
 suvatext_va(PyObject *self, PyObject *args) {
     double displ=0.0, initv=0.0, endv=0.0, accel=0.0, time=0.0;
+    known.s_known = known.u_known = known.t_known = 1;
     if (!PyArg_ParseTuple(args, "ddd", &displ, &initv, &time)
-            || check_args(SUT, displ, initv, endv, accel, time))
+            || check_args(displ, initv, endv, accel, time))
         return NULL;
 
     if (time != 0) {
@@ -161,7 +204,7 @@ suvatext_va(PyObject *self, PyObject *args) {
          */
         accel = (endv - initv) / time;
     } else {
-        PyErr_SetString(PyExc_ValueError, "Cannot solve given that data");
+        PyErr_SetString(PyExc_ValueError, _("Cannot solve given that data"));
         return NULL;
     }
 
@@ -171,8 +214,9 @@ suvatext_va(PyObject *self, PyObject *args) {
 static PyObject *
 suvatext_ut(PyObject *self, PyObject *args) {
     double displ=0.0, initv=0.0, endv=0.0, accel=0.0, time=0.0;
+    known.s_known = known.v_known = known.a_known = 1;
     if (!PyArg_ParseTuple(args, "ddd", &displ, &endv, &accel)
-            || check_args(SVA, displ, initv, endv, accel, time))
+            || check_args(displ, initv, endv, accel, time))
         return NULL;
 
     /* v^2 = u^2 + 2as
@@ -191,7 +235,7 @@ suvatext_ut(PyObject *self, PyObject *args) {
          */
         time = (2 * displ) / (initv + endv);
     } else {
-        PyErr_SetString(PyExc_ValueError, "Cannot solve given that data");
+        PyErr_SetString(PyExc_ValueError, _("Cannot solve given that data"));
         return NULL;
     }
 
@@ -201,8 +245,9 @@ suvatext_ut(PyObject *self, PyObject *args) {
 static PyObject *
 suvatext_ua(PyObject *self, PyObject *args) {
     double displ=0.0, initv=0.0, endv=0.0, accel=0.0, time=0.0;
+    known.s_known = known.v_known = known.t_known = 1;
     if (!PyArg_ParseTuple(args, "ddd", &displ, &endv, &time)
-            || check_args(SVT, displ, initv, endv, accel, time))
+            || check_args(displ, initv, endv, accel, time))
         return NULL;
 
     if (time != 0) {
@@ -216,7 +261,7 @@ suvatext_ua(PyObject *self, PyObject *args) {
          */
         accel = (endv - initv) / time;
     } else {
-        PyErr_SetString(PyExc_ValueError, "Cannot solve given that data");
+        PyErr_SetString(PyExc_ValueError, _("Cannot solve given that data"));
         return NULL;
     }
 
@@ -226,8 +271,9 @@ suvatext_ua(PyObject *self, PyObject *args) {
 static PyObject *
 suvatext_uv(PyObject *self, PyObject *args) {
     double displ=0.0, initv=0.0, endv=0.0, accel=0.0, time=0.0;
+    known.s_known = known.a_known = known.t_known = 1;
     if (!PyArg_ParseTuple(args, "ddd", &displ, &accel, &time)
-            || check_args(SAT, displ, initv, endv, accel, time))
+            || check_args(displ, initv, endv, accel, time))
         return NULL;
 
     if (time != 0) {
@@ -239,7 +285,7 @@ suvatext_uv(PyObject *self, PyObject *args) {
         /* v = u + at */
         endv = initv + accel * time;
     } else {
-        PyErr_SetString(PyExc_ValueError, "Cannot solve given that data");
+        PyErr_SetString(PyExc_ValueError, _("Cannot solve given that data"));
         return NULL;
     }
 
@@ -249,8 +295,9 @@ suvatext_uv(PyObject *self, PyObject *args) {
 static PyObject *
 suvatext_st(PyObject *self, PyObject *args) {
     double displ=0.0, initv=0.0, endv=0.0, accel=0.0, time=0.0;
+    known.u_known = known.v_known = known.a_known = 1;
     if (!PyArg_ParseTuple(args, "ddd", &initv, &endv, &accel)
-            || check_args(UVA, displ, initv, endv, accel, time))
+            || check_args(displ, initv, endv, accel, time))
         return NULL;
 
     if (accel != 0) {
@@ -271,7 +318,7 @@ suvatext_st(PyObject *self, PyObject *args) {
             time = (endv - initv) / accel;
         }
     } else {
-        PyErr_SetString(PyExc_ValueError, "Cannot solve given that data");
+        PyErr_SetString(PyExc_ValueError, _("Cannot solve given that data"));
         return NULL;
     }
 
@@ -281,8 +328,9 @@ suvatext_st(PyObject *self, PyObject *args) {
 static PyObject *
 suvatext_sa(PyObject *self, PyObject *args) {
     double displ=0.0, initv=0.0, endv=0.0, accel=0.0, time=0.0;
+    known.u_known = known.v_known = known.t_known = 1;
     if (!PyArg_ParseTuple(args, "ddd", &initv, &endv, &time)
-            || check_args(UVT, displ, initv, endv, accel, time))
+            || check_args(displ, initv, endv, accel, time))
         return NULL;
 
     /* s = t(u + v) / 2 */
@@ -294,7 +342,7 @@ suvatext_sa(PyObject *self, PyObject *args) {
          */
         accel = (endv - initv) / time;
     } else { /* if t = 0, s = 0 so no way we can find a */
-        PyErr_SetString(PyExc_ValueError, "Cannot solve given that data");
+        PyErr_SetString(PyExc_ValueError, _("Cannot solve given that data"));
         return NULL;
     }
 
@@ -304,8 +352,9 @@ suvatext_sa(PyObject *self, PyObject *args) {
 static PyObject *
 suvatext_sv(PyObject *self, PyObject *args) {
     double displ=0.0, initv=0.0, endv=0.0, accel=0.0, time=0.0;
+    known.u_known = known.a_known = known.t_known = 1;
     if (!PyArg_ParseTuple(args, "ddd", &initv, &accel, &time)
-            || check_args(UAT, displ, initv, endv, accel, time))
+            || check_args(displ, initv, endv, accel, time))
         return NULL;
 
     /* v = u + at */
@@ -320,8 +369,9 @@ suvatext_sv(PyObject *self, PyObject *args) {
 static PyObject *
 suvatext_su(PyObject *self, PyObject *args) {
     double displ=0.0, initv=0.0, endv=0.0, accel=0.0, time=0.0;
+    known.v_known = known.a_known = known.t_known = 1;
     if (!PyArg_ParseTuple(args, "ddd", &endv, &accel, &time)
-            || check_args(VAT, displ, initv, endv, accel, time))
+            || check_args(displ, initv, endv, accel, time))
         return NULL;
 
     /* s = vt - .5at^2 */

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Name=Suvat
+Type=Application
+GenericName=Motion simulator
+Comment=Calculate various details about the motion of an object
+Icon=suvat
+Exec=suvat
+Terminal=false
+Categories=Education;Science;Engineering;

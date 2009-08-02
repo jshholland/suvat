@@ -4,36 +4,29 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.7	//
-DEB_PYTHON_SYSTEM	debian/rules	/^DEB_PYTHON_SYSTEM=pycentral$/;"	m
-SAT	suvatlib/suvatext.c	/^enum suvat_known {SUV, SUA, SUT, SVA, SVT, SAT, UVA, UVT, UAT, VAT};$/;"	e	enum:suvat_known	file:
-SUA	suvatlib/suvatext.c	/^enum suvat_known {SUV, SUA, SUT, SVA, SVT, SAT, UVA, UVT, UAT, VAT};$/;"	e	enum:suvat_known	file:
-SUT	suvatlib/suvatext.c	/^enum suvat_known {SUV, SUA, SUT, SVA, SVT, SAT, UVA, UVT, UAT, VAT};$/;"	e	enum:suvat_known	file:
-SUV	suvatlib/suvatext.c	/^enum suvat_known {SUV, SUA, SUT, SVA, SVT, SAT, UVA, UVT, UAT, VAT};$/;"	e	enum:suvat_known	file:
-SVA	suvatlib/suvatext.c	/^enum suvat_known {SUV, SUA, SUT, SVA, SVT, SAT, UVA, UVT, UAT, VAT};$/;"	e	enum:suvat_known	file:
-SVT	suvatlib/suvatext.c	/^enum suvat_known {SUV, SUA, SUT, SVA, SVT, SAT, UVA, UVT, UAT, VAT};$/;"	e	enum:suvat_known	file:
 SuvatMethods	suvatlib/suvatext.c	/^static PyMethodDef SuvatMethods[] = {$/;"	v	file:
 SuvatWin	build/lib.linux-i686-2.6/suvatlib/suvatwin.py	/^class SuvatWin:$/;"	c
 SuvatWin	suvatlib/suvatwin.py	/^class SuvatWin:$/;"	c
-UAT	suvatlib/suvatext.c	/^enum suvat_known {SUV, SUA, SUT, SVA, SVT, SAT, UVA, UVT, UAT, VAT};$/;"	e	enum:suvat_known	file:
-UVA	suvatlib/suvatext.c	/^enum suvat_known {SUV, SUA, SUT, SVA, SVT, SAT, UVA, UVT, UAT, VAT};$/;"	e	enum:suvat_known	file:
-UVT	suvatlib/suvatext.c	/^enum suvat_known {SUV, SUA, SUT, SVA, SVT, SAT, UVA, UVT, UAT, VAT};$/;"	e	enum:suvat_known	file:
-VAT	suvatlib/suvatext.c	/^enum suvat_known {SUV, SUA, SUT, SVA, SVT, SAT, UVA, UVT, UAT, VAT};$/;"	e	enum:suvat_known	file:
 __init__	build/lib.linux-i686-2.6/suvatlib/suvatwin.py	/^    def __init__(self):$/;"	m	class:SuvatWin
 __init__	suvatlib/suvatwin.py	/^    def __init__(self):$/;"	m	class:SuvatWin
+a_known	suvatlib/suvatext.c	/^    unsigned a_known : 1;$/;"	m	struct:__anon1	file:
+build	setup.py	/^class build(_build):$/;"	c
 calculate	build/lib.linux-i686-2.6/suvatlib/suvatcalc.py	/^def calculate(val_list):$/;"	f
 calculate	suvatlib/suvatcalc.py	/^def calculate(val_list):$/;"	f
 cb_calculate	build/lib.linux-i686-2.6/suvatlib/suvatwin.py	/^    def cb_calculate(self, widget, data=None):$/;"	m	class:SuvatWin
 cb_calculate	suvatlib/suvatwin.py	/^    def cb_calculate(self, widget, data=None):$/;"	m	class:SuvatWin
 cb_reset	build/lib.linux-i686-2.6/suvatlib/suvatwin.py	/^    def cb_reset(self, widget, data=None):$/;"	m	class:SuvatWin
 cb_reset	suvatlib/suvatwin.py	/^    def cb_reset(self, widget, data=None):$/;"	m	class:SuvatWin
-check_args	suvatlib/suvatext.c	/^check_args(int known, double displ, double initv, double endv, double accel,$/;"	f	file:
+check_args	suvatlib/suvatext.c	/^check_args(double displ, double initv, double endv, double accel,$/;"	f	file:
 initsuvatext	suvatlib/suvatext.c	/^initsuvatext(void) {$/;"	f
+known	suvatlib/suvatext.c	/^} known;$/;"	v	typeref:struct:__anon1	file:
 main	build/lib.linux-i686-2.6/suvatlib/suvatwin.py	/^def main():$/;"	f
 main	suvatlib/suvatext.c	/^main(int argc, char *argv[]) {$/;"	f
 main	suvatlib/suvatwin.py	/^def main():$/;"	f
 make_dialog	build/lib.linux-i686-2.6/suvatlib/suvatwin.py	/^def make_dialog(title, message):$/;"	f
 make_dialog	suvatlib/suvatwin.py	/^def make_dialog(title, message):$/;"	f
-suvat_known	suvatlib/suvatext.c	/^enum suvat_known {SUV, SUA, SUT, SVA, SVT, SAT, UVA, UVT, UAT, VAT};$/;"	g	file:
+run	setup.py	/^    def run(self):$/;"	m	class:build
+s_known	suvatlib/suvatext.c	/^    unsigned s_known : 1;$/;"	m	struct:__anon1	file:
 suvatext_at	suvatlib/suvatext.c	/^suvatext_at(PyObject *self, PyObject *args) {$/;"	f	file:
 suvatext_sa	suvatlib/suvatext.c	/^suvatext_sa(PyObject *self, PyObject *args) {$/;"	f	file:
 suvatext_st	suvatlib/suvatext.c	/^suvatext_st(PyObject *self, PyObject *args) {$/;"	f	file:
@@ -44,3 +37,6 @@ suvatext_ut	suvatlib/suvatext.c	/^suvatext_ut(PyObject *self, PyObject *args) {$
 suvatext_uv	suvatlib/suvatext.c	/^suvatext_uv(PyObject *self, PyObject *args) {$/;"	f	file:
 suvatext_va	suvatlib/suvatext.c	/^suvatext_va(PyObject *self, PyObject *args) {$/;"	f	file:
 suvatext_vt	suvatlib/suvatext.c	/^suvatext_vt(PyObject *self, PyObject *args) {$/;"	f	file:
+t_known	suvatlib/suvatext.c	/^    unsigned t_known : 1;$/;"	m	struct:__anon1	file:
+u_known	suvatlib/suvatext.c	/^    unsigned u_known : 1;$/;"	m	struct:__anon1	file:
+v_known	suvatlib/suvatext.c	/^    unsigned v_known : 1;$/;"	m	struct:__anon1	file:
