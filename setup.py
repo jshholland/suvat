@@ -1,16 +1,8 @@
 #!/usr/bin/env python
 from distutils.core import setup, Extension
-from distutils.command.install import install as _install
-import os
-
-class install(_install):
-    def run(self):
-        _install.run(self)
-        os.system("desktop-file-install data/suvat.desktop")
 
 
-setup(cmdclass = {'install': install},
-      name = 'suvat',
+setup(name = 'suvat',
       version = '0.2',
       description = 'A simple GUI to solve equations of motion under '
               'constant acceleration',
@@ -25,5 +17,6 @@ setup(cmdclass = {'install': install},
       ext_modules = [Extension('suvatext', sources = ['suvatlib/suvatext.c'])],
       requires = ['pygtk (>= 2.0)', 'gtk'],
       license = 'GPL-3',
-      data_files = [('/usr/share/man/man1', ['doc/suvat.1.gz'])],
+      data_files = [('share/man/man1', ['doc/suvat.1.gz']),
+                    ('share/applications', ['data/suvat.desktop'])],
       url = 'https://launchpad.net/suvat')

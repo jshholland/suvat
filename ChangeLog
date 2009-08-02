@@ -5,6 +5,7 @@ Changes in 0.2
     * Desktop file included (thanks to Fabian Affolter
 	<fab@fedoraproject.org>)
     * Icon added
+    * setup.py script changed to make it prefix-agnostic
 
 
 Changes in 0.1.1
