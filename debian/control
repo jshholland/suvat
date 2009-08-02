@@ -4,7 +4,7 @@ Priority: extra
 Maintainer: Ubuntu MOTU Developers <ubuntu-motu@lists.ubuntu.com>
 XSBC-Original-Maintainer: Josh Holland <jrh@joshh.co.uk>
 XS-Python-Version: all
-Build-Depends: cdbs, debhelper (>= 7), python-dev, python-central
+Build-Depends: debhelper (>= 7), python-dev, python-central
 Standards-Version: 3.8.0
 Homepage: https://launchpad.net/suvat
 
