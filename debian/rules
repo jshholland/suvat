@@ -30,7 +30,7 @@ install: build
 	dh_prep
 	dh_installdirs
 
-	$(PYTHON) setup.py install --root `pwd`/debian/`dh_listpackages`/
+	$(PYTHON) setup.py install --prefix `pwd`/debian/`dh_listpackages`/usr/
 
 # Build architecture-independent files here.
 binary-indep: build install
@@ -42,7 +42,7 @@ binary-arch: build install
 	dh_testroot
 	dh_installchangelogs
 	dh_installdocs
-	dh_installexamples
+#	dh_installexamples
 #	dh_install
 	dh_installmenu
 #	dh_installdebconf
@@ -59,7 +59,7 @@ binary-arch: build install
 #	dh_lintian
 #	dh_bugfiles
 #	dh_undocumented
-	dh_installman suvat.1.gz
+#	dh_installman
 	dh_link
 	dh_strip
 	dh_compress
