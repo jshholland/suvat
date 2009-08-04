@@ -425,13 +425,3 @@ PyMODINIT_FUNC
 initsuvatext(void) {
     (void) Py_InitModule("suvatext", SuvatMethods);
 }
-
-int
-main(int argc, char *argv[]) {
-    Py_SetProgramName(argv[0]);
-
-    Py_Initialize();
-
-    initsuvatext();
-    return 0;
-}
