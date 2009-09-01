@@ -4,7 +4,7 @@ Changes in 0.2
     * Input screening in suvatext.c improved
     * Desktop file included (thanks to Fabian Affolter
 	<fab@fedoraproject.org>)
-    * Icon added
+    * Icon added (from Will Bickerstaff)
     * setup.py script changed to make it prefix-agnostic
 
 
