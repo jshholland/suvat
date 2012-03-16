@@ -138,10 +138,10 @@ suvatext_at(PyObject *self, PyObject *args) {
         accel = (endv * endv - initv * initv) / (2 * displ);
 
         if (accel != 0) {
-            /* s = u + at
-             * t = (s - u) / a
+            /* v = u + at
+             * t = (v - u) / a
              */
-            time = (displ - initv) / accel;
+            time = (endv - initv) / accel;
         } else {
             PyErr_SetString(PyExc_ValueError, _("Cannot solve given that data"));
             return NULL;
